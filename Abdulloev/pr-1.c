@@ -13,7 +13,6 @@ int main()
 {
 	DIR *d;
     struct dirent *dir;
-    char VOWELS[] = {'a', 'e', 'o', 'i', 'u', 'y'};
     d = opendir(".");
     if (d) {
         while ((dir=readdir(d)) != NULL) {
@@ -40,16 +39,16 @@ int main()
                     memmove(&old[indexToDel], &old[indexToDel + 1], strlen(old) - indexToDel); // удаляем первый символ
 
                     // Проверка
-                    if ((rename(dir->d_name, strcat(old, ""))) == 0) {
+                    if ((rename(dir->d_name, old)) == 0) {
                         printf("%s >>>>> %s\n", dir->d_name,  old);
                     } 
-                    else {
-                        printf("%s\n", "File renamed");
-                    }  
+                    // else {
+                    //     
+                    // }  
                 }
             }    
         }
-        closedir(d);
+        closedir(d); // не забываем закрыть директорию
 
     } else {
         printf("%s", strerror(errno));
