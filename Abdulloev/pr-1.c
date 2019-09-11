@@ -4,49 +4,65 @@
 #include<dirent.h>
 #include<string.h>
 #include<sys/stat.h>
-#include<sys/types.h>
-#include<unistd.h>
 #include<errno.h>
-#include<stdbool.h>
 
 int main()
 {
-	DIR *d;
+    DIR *d;
     struct dirent *dir;
     d = opendir(".");
+    errno = 0;
     if (d) {
         while ((dir=readdir(d)) != NULL) {
             struct stat file;
-            stat(dir->d_name, &file);
-            if (S_ISREG(file.st_mode)){ // Проверка на regular file
 
-                int i, countOfVowels;
+            if (stat(dir->d_name, &file) == -1){
+                printf("Ошибка в файле %s", strerror(errno));
+            }
+            else if (S_ISREG(file.st_mode)) // Проверка на regular file
+            { 
+
+                int countOfVowels;
                 countOfVowels = 0; // кол-во гласных букв в названии файла
+                char* s=dir->d_name;
+                while ((*s) && (countOfVowels < 3)) {
 
-                for (i = 0; i < strlen(dir->d_name); i++) {
-                    if ((dir->d_name[i] == 'a') || (dir->d_name[i] == 'o') || (dir->d_name[i] == 'i')
-                        || (dir->d_name[i] == 'e') || (dir->d_name[i] == 'u') || (dir->d_name[i] == 'y')){
-                        countOfVowels += 1;   
+                    switch (*s){
+                        case 'a':
+                        case 'o':
+                        case 'i':
+                        case 'e':
+                        case 'u':
+                        case 'y':
+                        case 'A':
+                        case 'O':
+                        case 'I':
+                        case 'E':
+                        case 'U':
+                        case 'Y':
+                            countOfVowels += 1;
+                            break;    
                     }
+                    s++;
                 }
 
                 if (countOfVowels == 2) { // Если имя файла содержит 2 гласные буквы
 
-                    char old[strlen(dir->d_name) + 1];
-                    strcpy(old, dir->d_name);
-
-                    int indexToDel = 0; // индекс символа, который мы удалим
-                    memmove(&old[indexToDel], &old[indexToDel + 1], strlen(old) - indexToDel); // удаляем первый символ
+                    char old[strlen(dir->d_name) ];
+                    strcpy(old, dir->d_name + 1);
 
                     // Проверка
                     if ((rename(dir->d_name, old)) == 0) {
                         printf("%s >>>>> %s\n", dir->d_name,  old);
                     } 
-                    // else {
-                    //     
-                    // }  
+                    else {
+                        printf("Файле не переименован %s", strerror(errno));  
+                    }  
                 }
             }    
+        }
+        if (errno != 0 ) {
+            printf("Error reading directory %s", strerror(errno));
         }
         closedir(d); // не забываем закрыть директорию
 
