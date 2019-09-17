@@ -1,0 +1,3 @@
+﻿  Pr2.cpp
+c:\users\toshiba\source\repos\pr2\pr2\pr2.cpp(12): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
+  Pr2.vcxproj -> C:\Users\Toshiba\source\repos\Pr2\Debug\Pr2.exe
