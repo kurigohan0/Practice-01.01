@@ -4,6 +4,7 @@
 #include <Windows.h>
 #include <TCHAR.h>
 #include <winerror.h>
+#include <pchannel.h>
 using namespace std;
 
 //TCHAR
@@ -11,7 +12,7 @@ using namespace std;
 void main()
 {
 	WIN32_FIND_DATA s;
-	HANDLE f = FindFirstFile(_T("C:\\Users\\Toshiba\\Desktop\\Никитин\\*.*"), &s);
+	HANDLE f = FindFirstFile(_T("C:\\Users\\Spyinfo\\Desktop\\College\\*.*"), &s);
 	TCHAR err[256];
 	if (f != INVALID_HANDLE_VALUE)
 	{
