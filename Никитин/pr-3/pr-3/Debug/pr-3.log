@@ -1,0 +1,3 @@
+﻿  pr-3.cpp
+C:\Users\Spyinfo\Desktop\College\Practice-01.01\Abdulloev\pr-3\pr-3\pr-3\pr-3.cpp(80,1): warning C4326:  возвращаемый тип "main" должен быть "int", а не "void"
+  pr-3.vcxproj -> C:\Users\Spyinfo\Desktop\College\Practice-01.01\Abdulloev\pr-3\pr-3\Debug\pr-3.exe
